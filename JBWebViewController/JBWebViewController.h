@@ -34,7 +34,6 @@ typedef void (^completion)(JBWebViewController *controller);
 - (void)showFromController:(UIViewController*)controller;
 - (void)dismiss;
 - (void)reload;
-- (void)share;
 - (void)setWebTitle:(NSString *)title;
 - (void)setWebSubtitle:(NSString *)subtitle;
 - (void)showControllerWithCompletion:(completion)completion;

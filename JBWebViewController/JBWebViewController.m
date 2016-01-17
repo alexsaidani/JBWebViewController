@@ -123,9 +123,8 @@
     self.navigationItem.titleView = _titleView;
     
     // Inset right buttons
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Share"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
     UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Dismiss"] style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
-    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:dismissButton, shareButton, nil]];
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:dismissButton, nil]];
     
     // Add a webview
     _webView = [[UIWebView alloc] initWithFrame:self.view.frame];
@@ -219,31 +218,6 @@
 }
 
 #pragma mark - "Right buttons"
-
-- (void)share {
-    // Create instances of third-party share actions
-    ARSafariActivity *safariActivity = [[ARSafariActivity alloc] init];
-    ARChromeActivity *chromeActivity = [[ARChromeActivity alloc] init];
-    
-    // Create share controller from our url
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[self.webView.request.URL] applicationActivities:@[safariActivity, chromeActivity]];
-    
-    // If device is iPad
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-         // Dismiss popover if present
-         if(_popoverShareController) {
-             [_popoverShareController dismissPopoverAnimated:YES];
-         }
-         
-         // Insert share controller in popover and present it
-         _popoverShareController = [[UIPopoverController alloc] initWithContentViewController:controller];
-         [_popoverShareController presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItems[1] permittedArrowDirections: UIPopoverArrowDirectionAny animated:YES];
-    } else {
-         // Present share sheet (on iPhone)
-         [self presentViewController:controller animated:YES completion:nil];
-    }
-}
-
 - (void)dismiss {
     [self dismissViewControllerAnimated:YES completion:^{
         // Code
